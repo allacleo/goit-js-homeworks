@@ -4,7 +4,7 @@ const countryToChoose = prompt('Введите страну доставки');
 if (countryToChoose === null || countryToChoose === '') {
     console.log('Страна доставки не выбрана!');
   } else {
-  const country = countryToChoose.toLowerCase();
+  const country = countryToChoose.toLowerCase().trim();
   
   switch (country) {
     case 'китай':
