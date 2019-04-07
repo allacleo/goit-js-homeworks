@@ -42,4 +42,3 @@ if (countryToChoose === null || countryToChoose === '') {
       console.log('В вашей стране доставка не доступна');
   }
   }
-  
