@@ -1,23 +1,45 @@
 'use strict';
-const country = prompt('Введите страну доставки');
-let message;
-switch (country) {
-    case 'Индия':
-    message = `Доставка в ${country} будет стоить 80 кредитов`;
-    break;
-    case 'Китай':
-    message = `Доставка в ${country} будет стоить 100 кредитов`;
-    break;
-    case 'Австралия':
-    message = `Доставка в ${country} будет стоить 170 кредитов`;
-    break;
-    case 'Южная Америка':
-    message = `Доставка в ${country} будет стоить 250 кредитов`;
-    break;
-    case 'Ямайка':
-    message = `Доставка в ${country} будет стоить 120 кредитов`;
-    break;
+const countryToChoose = prompt('Введите страну доставки');
+
+if (countryToChoose === null || countryToChoose === '') {
+    console.log('Страна доставки не выбрана!');
+  } else {
+  const country = countryToChoose.toLowerCase();
+  
+  switch (country) {
+    case 'китай':
+      const chinaShipping = 100;
+      console.log(`Доставка в ${country} будет стоить ${chinaShipping} кредитов`);
+      break;
+  
+    case 'южная америка':
+      const southAmericaShipping = 250;
+      console.log(
+        `Доставка в ${country} будет стоить ${southAmericaShipping} кредитов`,
+      );
+      break;
+  
+    case 'австралия':
+      const australiaShipping = 170;
+      console.log(
+        `Доставка в ${country} будет стоить ${australiaShipping} кредитов`,
+      );
+      break;
+  
+    case 'индия':
+      const indiaShipping = 80;
+      console.log(`Доставка в ${country} будет стоить ${indiaShipping} кредитов`);
+      break;
+  
+    case 'ямайка':
+      const jamaicaShipping = 120;
+      console.log(
+        `Доставка в ${country} будет стоить ${jamaicaShipping} кредитов`,
+      );
+      break;
+  
     default:
-    message = `В вашей стране доствка не доступна!`;
-}
-console.log(message);
+      console.log('В вашей стране доставка не доступна');
+  }
+  }
+  
