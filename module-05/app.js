@@ -2,7 +2,7 @@
 
 const Notepad = function Notepad(notes = []) {
 this.notes = notes;
-};
+
 
 this.getNotes = function() {
     /*
@@ -116,7 +116,9 @@ return this.notes;
       }
     }
     return prioritized;
-  };
+  }
+
+};
 
   Notepad.Priority = {
     LOW: 0,
