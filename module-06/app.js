@@ -38,10 +38,7 @@ for (let i = 0; i < this._notes.length; i += 1) {
 };
 
 updateNoteContent = function(id, updatedContent) {
-  const updateNote = {...this.findNoteById(id), ...updatedContent};
-this.deleteNote(id);
-this.saveNote(updateNote);
-return updateNote;
+  return Object.assign(this.findNoteById(id), updatedContent);
 }
 
 updateNotePriority = function(id) {
