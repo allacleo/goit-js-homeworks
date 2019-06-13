@@ -8,8 +8,8 @@ import galleryItems from "./gallery-items.js";
 
 const createGallery = galleryItems => {    
 const gallery = document.querySelector('.gallery');
-  galleryItems.map(e => {
-const text = `<li class="gallery__item">
+galleryItems.map(e => {
+const list = `<li class="gallery__item">
         <a
           class="gallery__link"
           href="${e.original}"
@@ -26,62 +26,58 @@ const text = `<li class="gallery__item">
           </span>
         </a>
         </li>`;
-        gallery.insertAdjacentHTML('beforeend', text);
+        gallery.insertAdjacentHTML('beforeend', list);
   });
   return gallery;
 
 };
 
+
 const handlers = galleryItems => {
   const gallery = createGallery(galleryItems);
-
   const modal = document.querySelector('.lightbox');
-  const overlay = document.querySelector('.lightbox___image')
-  const closeModalBtn = document.querySelector('.lightbox__button[data-action="close-modal"]');
+
+  const content = document.querySelector('.lightbox__content')
+  const closeModalBtn = document.querySelector('.lightbox__button');
+  const lightboxImage = document.querySelector('.lightbox___image');
  
-  gallery.addEventListener('click', openModal);
-  modal.addEventListener('click', handleClick);
+  gallery.addEventListener('click', handleOpenModal);
   closeModalBtn.addEventListener('click', handleCloseBtn);
+ content.addEventListener('click', handleCloseModal);
+ lightboxImage.addEventListener('click', handleCloseModal);
 
-  function handleClick(e) {
-    e.preventDefault();
-    if (e.target === e.currentTarget) {
-      return;
+
+  function handleOpenModal() {
+  modal.classList.add('.is-open');
+  lightboxImage.setAttribute('src', e.target.dataset.source);
+  window.addEventListener('keydown', handleKeyPress);
+
+  }
+
+
+
+  function handleCloseModal() {
+    modal.classList.remove('.is-open');
+    window.removeEventListener("keydown", handleKeyPress);
     }
-    const currentImage = e.target.dataset.source;
-    overlay.src = currentImage;
-    openModal();
+
+
+
+  function handleCloseBtn() {
+    modal.classList.remove('is-open');
+    window.removeEventListener('keydown', handleKeyPress);
   }
-
-  
-
-  function openModal() {
-    modal.classList.add('.is-open');
-    // modal.addEventListener('click', handleCloseOverlay)
-    window.addEventListener('keydown', handleKeyPress);
-  }
-
-  function handleCloseBtn(e) {
-    closeModal();
-  }
-
-  // function handleCloseOverlay(e) {
-  //   if (e.target === e.currentTarget) {
-  //     closeModal();
-  //   }
-  // }
 
   function handleKeyPress(e) {
-    if (e.code === 'Escape') {
-      closeModal();
+    if (e.code !== 'Escape') {
+      return;
     }
+    handleCloseModal();
   }
 
 
-function closeModal() {
-modal.classList.remove('.is-open');
-window.removeEventListener('keydown', handleKeyPress);
-}
 
 };
-handlers(galleryItems);
+  handlers(galleryItems);
+
+
