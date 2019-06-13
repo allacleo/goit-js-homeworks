@@ -28,12 +28,8 @@ const list = `<li class="gallery__item">
         </li>`;
         gallery.insertAdjacentHTML('beforeend', list);
   });
-  return gallery;
-
 };
 
-
-const handlers = galleryItems => {
   const gallery = createGallery(galleryItems);
   const modal = document.querySelector('.lightbox');
 
@@ -43,13 +39,13 @@ const handlers = galleryItems => {
  
   gallery.addEventListener('click', handleOpenModal);
   closeModalBtn.addEventListener('click', handleCloseBtn);
- content.addEventListener('click', handleCloseModal);
- lightboxImage.addEventListener('click', handleCloseModal);
+  content.addEventListener('click', handleCloseModal);
+  lightboxImage.addEventListener('click', handleCloseModal);
 
 
   function handleOpenModal() {
-  modal.classList.add('.is-open');
   lightboxImage.setAttribute('src', e.target.dataset.source);
+  modal.classList.add('.is-open');
   window.addEventListener('keydown', handleKeyPress);
 
   }
@@ -76,8 +72,5 @@ const handlers = galleryItems => {
   }
 
 
-
-};
-  handlers(galleryItems);
 
 
