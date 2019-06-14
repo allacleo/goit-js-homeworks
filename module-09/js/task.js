@@ -1,15 +1,9 @@
-// Необходимо динамически создать элементы галереи по указанному шаблону.
-// При клике по элементу галереи должно открываться модальное окно с полноразмерным изображением. Обязательно использовать делегирование событий и слушать клики на элементе ul.gallery.
-// Модальное окно должно закрываться по клику на кнопку button[data-action="close-modal"], по клику на div.overlay или по нажатию ESC.
+import galleryItems from './gallery-items.js';
 
-
-import galleryItems from "./gallery-items.js";
-
-
-const createGallery = galleryItems => {    
-const gallery = document.querySelector('.gallery');
-galleryItems.map(e => {
-const list = `<li class="gallery__item">
+const createGallery = galleryItems => {
+  const gallery = document.querySelector('.gallery');
+  galleryItems.map(e => {
+    const list = `<li class="gallery__item">
         <a
           class="gallery__link"
           href="${e.original}"
@@ -26,51 +20,55 @@ const list = `<li class="gallery__item">
           </span>
         </a>
         </li>`;
-        gallery.insertAdjacentHTML('beforeend', list);
+    gallery.insertAdjacentHTML('beforeend', list);
   });
+  return gallery;
 };
 
-  const gallery = createGallery(galleryItems);
-  const modal = document.querySelector('.lightbox');
+const gallery = createGallery(galleryItems);
+const modal = document.querySelector('.lightbox');
+const lightboxImage = document.querySelector('.lightbox___image');
+const galleryOverlay = document.querySelector('.lightbox__content');
+const closeBtn = document.querySelector('.lightbox__button');
 
-  const content = document.querySelector('.lightbox__content')
-  const closeModalBtn = document.querySelector('.lightbox__button');
-  const lightboxImage = document.querySelector('.lightbox___image');
- 
-  gallery.addEventListener('click', handleOpenModal);
-  closeModalBtn.addEventListener('click', handleCloseBtn);
-  content.addEventListener('click', handleCloseModal);
-  lightboxImage.addEventListener('click', handleCloseModal);
+gallery.addEventListener('click', handleOpenModal);
+galleryOverlay.addEventListener('click', handleCloseModal);
+closeBtn.addEventListener('click', handleCloseBtn);
 
 
-  function handleOpenModal() {
+function handleOpenModal(e) {
+  e.preventDefault();
+  if (e.target === e.currentTarget) {
+    return;
+  }
   lightboxImage.setAttribute('src', e.target.dataset.source);
-  modal.classList.add('.is-open');
+  lightboxImage.setAttribute('alt', e.target.getAttribute('alt'));
+  openModal();
+  
+}
+
+function openModal() {
+  modal.classList.add('is-open');
   window.addEventListener('keydown', handleKeyPress);
+}
 
+function handleCloseModal(e) {
+if (e.target !== e.currentTarget) {
+   console.log(e.target);
+   console.log(e.currentTarget);
+return;
+ }
+ modal.classList.remove('is-open');
+}
+
+function handleCloseBtn() {
+  modal.classList.remove('is-open');
+  window.removeEventListener('keydown', handleKeyPress);
+}
+
+function handleKeyPress(e) {
+  if (e.code !== 'Escape') {
+    return;
   }
-
-
-
-  function handleCloseModal() {
-    modal.classList.remove('.is-open');
-    window.removeEventListener("keydown", handleKeyPress);
-    }
-
-
-
-  function handleCloseBtn() {
-    modal.classList.remove('is-open');
-    window.removeEventListener('keydown', handleKeyPress);
-  }
-
-  function handleKeyPress(e) {
-    if (e.code !== 'Escape') {
-      return;
-    }
-    handleCloseModal();
-  }
-
-
-
-
+  handleCloseBtn();
+}
