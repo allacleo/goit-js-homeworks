@@ -54,15 +54,15 @@ function openModal() {
 
 function handleCloseModal(e) {
 if (e.target !== e.currentTarget) {
-   console.log(e.target);
-   console.log(e.currentTarget);
 return;
  }
  modal.classList.remove('is-open');
+ lightboxImage.removeAttribute('src');
 }
 
 function handleCloseBtn() {
   modal.classList.remove('is-open');
+  lightboxImage.removeAttribute('src');
   window.removeEventListener('keydown', handleKeyPress);
 }
 
